@@ -1,17 +1,16 @@
-data "aws_ami" "amzn_linux_2_ami" {
+data "aws_ami" "amzn_ubuntu_22_ami" {
   most_recent = true
   owners      = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["al2023-ami-2023.*-x86_64"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
   }
 }
 
 resource "aws_instance" "server" {
-  # ami                         = data.aws_ami.amzn_linux_2_ami.id
-  ami                         = "ami-06aa3f7caf3a30282"
-  instance_type               = "t3.small"
+  ami                         = data.aws_ami.amzn_ubuntu_22_ami.id
+  instance_type               = "t3.micro"
   subnet_id                   = aws_subnet.public_subnet_01.id
   vpc_security_group_ids      = [aws_security_group.security_group_ec2.id]
   associate_public_ip_address = true

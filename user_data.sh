@@ -19,11 +19,13 @@ sudo apt-get update
 # sudo systemctl enable docker
 sudo snap install docker
 
-sudo chmod 666 /var/run/docker.sock
-sudo addgroup --system docker
+sudo groupadd docker
 sudo usermod -aG docker ubuntu
 newgrp docker
+sudo chmod 666 /var/run/docker.sock
 
 # Start Rancher
-docker run --name rancher -d --restart=unless-stopped -p 80:80 -p 443:443 \
-  --privileged rancher/rancher:v2.7.4 --acme-domain rancher.ntnghia.click --debug
+# docker run --name rancher -d --restart=unless-stopped -p 80:80 -p 443:443 \
+#   --privileged rancher/rancher:v2.7.4 --acme-domain rancher.ntnghia.click --debug
+
+docker run --name nginx -p 80:80 -d nginx
